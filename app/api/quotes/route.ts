@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/mongodb";
+import { connectDB } from "@/db/mongodb";
 import BibleVerse from "@/db/models/bibleModel";
 
 export async function GET(req: NextRequest) {

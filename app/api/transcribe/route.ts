@@ -3,8 +3,6 @@ import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-
 export async function POST(req: NextRequest) {
   try {
     const data = await req.formData();
@@ -199,25 +197,14 @@ async function fetchBibleQuotation(
     const BASE_URL =
       process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
 
-    // const response = await axios.get(
-    //   `${BASE_URL}/api/quotes?search=${encodeURIComponent(quoteAddress)}`
-    // );
+    // Ensure quoteAddress is a string before using encodeURIComponent
+    const safeQuoteAddress = quoteAddress ?? "";
 
-    // if (!response.data) {
-    //   console.warn("⚠️ No matching Bible verse found.");
-    //   return "No matching Bible verse found.";
-    // }
-
-    // ✅ If transcription result is "Next verse", fetch the next verse
-
-    if (quoteAddress?.toLowerCase() === "next verse") {
-      //   const lastFetchedVerse = response.data; // Get the last retrieved verse
-      if (!book || !chapter || !verse || !text) {
+    if (safeQuoteAddress.toLowerCase() === "next verse") {
+      if (!book || !chapter || !verse) {
         return "⚠️ Unable to find the next verse.";
       }
 
-      // Increment the verse number to fetch the next one
-      //   const added = verse + 1;
       const nextVerseQuery = `${book} ${chapter}:${Number(verse) + 1}`;
       console.log(`Fetching next verse: ${nextVerseQuery}`);
 
@@ -229,15 +216,15 @@ async function fetchBibleQuotation(
     }
 
     const response = await axios.get(
-      `${BASE_URL}/api/quotes?search=${encodeURIComponent(quoteAddress)}`
+      `${BASE_URL}/api/quotes?search=${encodeURIComponent(safeQuoteAddress)}`
     );
+
     if (!response.data) {
       console.warn("⚠️ No matching Bible verse found.");
       return "No matching Bible verse found.";
     }
 
-    return response.data; // Return the initially fetched verse
-    // return "";
+    return response.data;
   } catch (error) {
     console.error("❌ Error fetching Bible verse:", error);
     return "Error fetching Bible verse. Please try again.";

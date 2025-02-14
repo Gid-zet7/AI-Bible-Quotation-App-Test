@@ -121,7 +121,7 @@ export default function Home() {
               ) : (
                 <Disc className="w-8 h-8" />
               )}
-              <p className="text-sm ">
+              <p className={`text-sm  ${poppins.className}`}>
                 Transcribing and detecting Bible quotations in real time
               </p>
             </div>
