@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Bible Quote Assistant
 
-## Getting Started
+A real-time Bible quotation assistant that listens to sermons and displays relevant Bible verses using AI-powered speech recognition.
 
-First, run the development server:
+## Features
 
+- Real-time speech recognition using Web Speech API
+- Bible reference extraction using Google Gemini AI
+- MongoDB integration for quote history
+- WebSocket-based real-time updates
+- Modern, responsive UI built with Next.js and Tailwind CSS
+
+## Setup
+
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Create a `.env.local` file with the following variables:
+```
+MONGODB_URI=your_mongodb_connection_string
+GOOGLE_API_KEY=your_gemini_api_key
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Start the development server:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open your browser and navigate to `http://localhost:3000`
 
-## Learn More
+## How it Works
 
-To learn more about Next.js, take a look at the following resources:
+1. The app uses the Web Speech API to capture audio from your microphone
+2. Transcribed text is sent to the server via WebSocket
+3. Google Gemini AI analyzes the text to extract Bible references
+4. The app fetches the full verse from the Bible API
+5. Quotes are stored in MongoDB and displayed in real-time
+6. Recent quotes are preserved and displayed in chronological order
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Requirements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Modern web browser with Web Speech API support (Chrome recommended)
+- MongoDB database
+- Google Gemini API key
 
-## Deploy on Vercel
+## Note
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Make sure to:
+1. Allow microphone access when prompted by your browser
+2. Set up your MongoDB database and update the connection string
+3. Get a Google Gemini API key and add it to your environment variables
