@@ -177,13 +177,6 @@ Text: ${text}
   }
 }
 
-// async function fetchBibleQuotation(quoteAddress: string): Promise<string> {
-//   console.log(quoteAddress);
-//   const response = await axios.get(`api/quotes?search=${quoteAddress}`);
-//   //   const response = await axios.get(`https://bible-api.com/${quoteAddress}`);
-//   return response.data.text;
-// }
-
 async function fetchBibleQuotation(
   book: string | null,
   chapter: number | null,
