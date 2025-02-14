@@ -10,8 +10,6 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const searchQuery = searchParams.get("search"); // User input (partial/full quote or reference)
 
-    console.log(searchQuery);
-
     if (!searchQuery) {
       return NextResponse.json(
         { error: "Please provide a search query" },
@@ -33,11 +31,8 @@ export async function GET(req: NextRequest) {
       query = { text: { $regex: searchQuery, $options: "i" } };
     }
 
-    console.log(query);
-
     // Search the database for a single verse
     const bibleVerse = await BibleVerse.findOne(query).lean();
-    console.log(bibleVerse);
 
     if (bibleVerse) {
       return NextResponse.json(bibleVerse, { status: 200 });

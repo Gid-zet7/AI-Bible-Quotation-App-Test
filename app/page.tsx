@@ -42,7 +42,7 @@ export default function Home() {
 
       mediaRecorder.onstop = async () => {
         const audioBlob = new Blob(chunksRef.current, { type: "audio/wav" });
-        console.log(audioBlob);
+
         const formData = new FormData();
         formData.append("file", audioBlob, "audio.wav");
 
@@ -53,15 +53,13 @@ export default function Home() {
           formData.append("text", quotation.text);
         }
 
-        console.log(formData.get("file"));
-
         const response = await fetch("/api/transcribe", {
           method: "POST",
           body: formData,
         });
 
         const data = await response.json();
-        console.log(data);
+
         if (data.quotation) {
           setQuotation(data.quotation);
         } else {

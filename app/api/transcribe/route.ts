@@ -6,14 +6,12 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 export async function POST(req: NextRequest) {
   try {
     const data = await req.formData();
-    console.log(data);
+
     const audioFile = data.get("file") as Blob | null;
     const book = data.get("book") as string | null;
     const chapter = data.get("chapter") as number | null;
     const verse = data.get("verse") as number | null;
     const text = data.get("text") as string | null;
-
-    console.log(audioFile);
 
     if (!audioFile) {
       return NextResponse.json(
@@ -31,7 +29,6 @@ export async function POST(req: NextRequest) {
 
     // Extract Bible quote
     const quoteAddress = await extractBibleQuote(transcription);
-    console.log(quoteAddress);
 
     // Fetch full Bible quotation
     const fullQuotation = await fetchBibleQuotation(
@@ -41,7 +38,6 @@ export async function POST(req: NextRequest) {
       text,
       quoteAddress
     );
-    console.log(fullQuotation);
 
     return NextResponse.json({ quotation: fullQuotation });
   } catch (error) {
